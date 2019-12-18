@@ -1,0 +1,58 @@
+public class Solution {
+
+/*	Binary Tree Node class
+ * 
+ * class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+		
+		public BinaryTreeNode(T data) {
+			this.data = data;
+		}
+    }
+*/
+    
+    public static int height(BinaryTreeNode<Integer> root){
+        
+        if(root==null){
+            return 0;
+        }
+        
+        int heightLeft=height(root.left);
+        int heightRight=height(root.right);
+        
+        int ans=Math.max(heightLeft,heightRight)+1;
+        
+        return ans;
+    }
+    public static boolean isBST(BinaryTreeNode<Integer> root,int min,int max){
+        
+        if(root==null){
+            return true;
+        }
+        
+        if(root.data<min ||root.data>max){
+            return false;
+        }
+        
+        boolean ans=isBST(root.left,min,root.data);
+        boolean ANS=isBST(root.right,root.data,max);
+        
+        return ans&&ANS;
+    }
+	
+	public static int largestBSTSubtree(BinaryTreeNode<Integer> root) {
+		// Write your code here
+		if(isBST(root,Integer.MIN_VALUE , Integer.MAX_VALUE)){
+           return height(root);
+        }
+        else{
+            
+            int leftHeight=largestBSTSubtree(root.left);
+            int rightHeight=largestBSTSubtree(root.right);
+            
+            return Math.max(leftHeight,rightHeight);
+        }
+	}
+}
